@@ -216,9 +216,9 @@ get_EBS_List
 for ebs_selected in $ebs_backup_list; do
   if $instance_name_tag_create; then
     #get the id of the instance the volume is attached to
-    ec2_volume_instance_id=$(aws ec2 describe-volumes --output text --volume-id $ebs_selected  --query 'Volumes[*].[Attachments[*].InstanceId]')
+    ec2_volume_instance_id=$(aws --profile $profile ec2 describe-volumes --output text --volume-id $ebs_selected  --query 'Volumes[*].[Attachments[*].InstanceId]')
     #get the name of the instance for the instance id
-    ec2_volume_instance_name=$(aws ec2 describe-instances --output text --instance-id $ec2_volume_instance_id --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value')
+    ec2_volume_instance_name=$(aws --profile $profile ec2 describe-instances --output text --instance-id $ec2_volume_instance_id --query 'Reservations[].Instances[].Tags[?Key==`Name`].Value')
     #replace spaces with underscores (issue with tagging)
     ec2_volume_instance_name=$(echo "$ec2_volume_instance_name"|sed -e 's/ /_/g')
   fi

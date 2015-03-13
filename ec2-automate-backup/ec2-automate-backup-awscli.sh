@@ -131,8 +131,9 @@ purge_EBS_Snapshots() {
         echo "Snapshot \"$snapshot_id_evaluated\" with the PurgeAfterFE date of \"$purge_after_fe\" will be deleted."
         aws_ec2_delete_snapshot_result=$(aws --profile $profile ec2 delete-snapshot $region_param --snapshot-id $snapshot_id_evaluated --output text 2>&1)
       fi
-    done
-  }
+    fi
+  done
+}
 
   app_name=$(basename $0)
   #sets defaults
